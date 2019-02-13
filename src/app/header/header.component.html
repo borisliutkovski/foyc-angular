@@ -1,0 +1,12 @@
+<header>
+  <div>
+    <a [routerLink]="'/'">FOYC</a>
+    <p>{{ (userService.currentUser$ | async)?.userName }}</p>
+    <button *ngIf="userService.currentUser$ | async" type="button" (click)="userService.logout()">Log out</button>
+    <a *ngIf="!(userService.currentUser$ | async)" (click)="userService.login()">Sign in</a>
+  </div>
+
+  <div>
+    <h2>{{ appService.pageTitle | async }}</h2>
+  </div>
+</header>

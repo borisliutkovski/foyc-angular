@@ -1,0 +1,8 @@
+<app-filters></app-filters>
+
+<div>
+  <app-article
+    *ngFor="let article of homeService.articles$ | async"
+    [article]="article"
+  ></app-article>
+</div>

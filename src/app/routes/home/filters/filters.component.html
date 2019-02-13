@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+  <select formControlName="source">
+    <option *ngFor="let source of homeService.sources$ | async" [value]="source.id">{{ source.name }}</option>
+  </select>
+
+  <input type="text" formControlName="keywords" />
+
+  <input type="checkbox" formControlName="onlyByMe" />
+</form>
+
+<button type="button" (click)="addArticleClick()">Add Article</button>
