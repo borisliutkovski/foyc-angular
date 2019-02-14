@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <legend>
+    <h2>{{ isEdit ? Edit : Create }}</h2>
+  </legend>
+  <div>
+    <label for="title">Title</label>
+    <input id="title" formControlName="title" />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <input id="description" formControlName="description" />
+  </div>
+
+  <div>
+    <label for="content">Content</label>
+    <input id="content" formControlName="content" />
+  </div>
+
+  <div>
+    <label for="author">Author</label>
+    <input id="author" formControlName="author" />
+  </div>
+
+  <div>
+    <label for="url">Url</label>
+    <input id="url" formControlName="url" />
+  </div>
+
+  <div>
+    <label>Image</label>
+    <div>
+      <div>
+        <label for="imageUrl">URL</label>
+        <input type="radio" id="imageUrl" formControlName="imageType" [value]="ImageType.url" />
+      </div>
+      <div>
+        <label for="imageFile">File</label>
+        <input type="radio" id="imageFile" formControlName="imageType" [value]="ImageType.file" />
+      </div>
+    </div>
+
+    <input *ngIf="form.controls.imageType.value === ImageType.url" formControlName="urlToImage" />
+    <input *ngIf="form.controls.imageType.value === ImageType.file" type="file" formControlName="imageFile" />
+  </div>
+
+  <button type="submit">Save</button>
+  <button type="button" (click)="onBack()">Cancel</button>
+</form>

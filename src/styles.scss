@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  height: 100vh;
+}
+
+a {
+  color: #0052cc;
+  text-decoration: underline;
+}
+
+input,
+select {
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid grey;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  border: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  label {
+    margin: 0 5px;
+  }
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+button {
+  border: 1px solid gray;
+  background-color: lightcyan;
+  border-radius: 5px;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

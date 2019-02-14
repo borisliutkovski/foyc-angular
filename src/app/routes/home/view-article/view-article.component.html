@@ -1,0 +1,15 @@
+<div *ngIf="article">
+  <img *ngIf="article.urlToImage" [src]="article.urlToImage" />
+
+  <h1>{{ article.title }}</h1>
+
+  <p>{{ article.content }}</p>
+
+  <p>{{ article.publishedAt }}</p>
+  <p>{{ article.author }}</p>
+
+  <div>
+    <button type="button" (click)="editClick()">Edit</button>
+    <button type="button" (click)="deleteClick()">Delete</button>
+  </div>
+</div>

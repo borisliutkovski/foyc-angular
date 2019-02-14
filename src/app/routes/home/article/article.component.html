@@ -1,0 +1,17 @@
+<div class="article-wrapper">
+  <div class="article-content">
+    <img class="image" *ngIf="article.urlToImage" [src]="article.urlToImage" />
+    <div class="text ml-10">
+      <h6>{{ article.title }}</h6>
+      <p>{{ article.description }}</p>
+      <a (click)="readMoreClick()" href="javascript:void(0)">Read more...</a>
+    </div>
+  </div>
+  <div class="side-info">
+    <span>{{ article.publishedAt | date: 'dd/MM/yyyy hh:mm' }}</span>
+    <div class="buttons ml-10">
+      <button type="button" class="mb-10" (click)="editClick()">Edit</button>
+      <button type="button" (click)="deleteClick()">Delete</button>
+    </div>
+  </div>
+</div>

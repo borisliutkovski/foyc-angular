@@ -1,8 +1,11 @@
 <app-filters></app-filters>
 
-<div>
+<div class="home">
   <app-article
+    class="article"
     *ngFor="let article of homeService.articles$ | async"
     [article]="article"
   ></app-article>
+
+  <button class="loadmore" type="button" (click)="homeService.loadMoreArticles()">Load more</button>
 </div>

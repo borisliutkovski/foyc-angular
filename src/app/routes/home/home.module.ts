@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common'
 import { ArticleComponent } from './article/article.component'
 import { HttpClientModule } from '@angular/common/http'
 import { NewsAPIService } from './newsapi.service'
+import { ViewArticleComponent } from './view-article/view-article.component'
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { NewsAPIService } from './newsapi.service'
     HomeComponent,
     FiltersComponent,
     ArticleComponent,
+    ViewArticleComponent,
   ],
   providers: [
     HomeService,

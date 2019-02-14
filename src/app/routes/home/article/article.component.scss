@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  border-radius: 10px;
+  box-shadow: 1px 4px 15px 4px rgba(0, 0, 0, .3);
+  padding: 10px 20px;
+}
+
+.article-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-content {
+  align-items: center;
+  display: flex;
+  height: 120px;
+}
+
+.image {
+  height: 100px;
+}
+
+.side-info {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.buttons {
+  button {
+    width: 100%;
+  }
+}

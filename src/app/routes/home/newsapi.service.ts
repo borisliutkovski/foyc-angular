@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { of } from 'rxjs'
 import { Source } from 'src/app/models/source'
 import { environment } from 'src/environments/environment'
 import { Article } from 'src/app/models/article'
@@ -26,9 +26,33 @@ export class NewsAPIService {
     return this.http.get<SourcesResponse>(`https://newsapi.org/v2/sources?apiKey=${environment.newsApiKey}`)
   }
 
-  getTopArticles() {
+  getTopArticles(page: number = 1) {
     return this.http.get<ArticlesResponse>(
-      `https://newsapi.org/v2/top-headlines?language=en&apiKey=${environment.newsApiKey}`,
+      `https://newsapi.org/v2/top-headlines` +
+      `?language=en` +
+      `&pageSize=10` +
+      `&page=${page}` +
+      `&apiKey=${environment.newsApiKey}`,
     )
+  }
+
+  getArticleById(id: string) {
+    // supposed to be my api
+    const article: Article = {
+      author: 'author',
+      content: 'content',
+      description: 'description',
+      id: '234985yiuao4',
+      publishedAt: new Date(),
+      source: {
+        id: 'asdf',
+        name: 'asdfasd',
+      },
+      title: 'Title',
+      url: 'asdfsfad',
+      urlToImage: 'asdfasdf',
+    }
+
+    return of(article)
   }
 }

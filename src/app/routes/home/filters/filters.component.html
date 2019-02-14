@@ -1,11 +1,18 @@
-<form [formGroup]="form">
-  <select formControlName="source">
-    <option *ngFor="let source of homeService.sources$ | async" [value]="source.id">{{ source.name }}</option>
-  </select>
+<div class="filter-wrapper">
+  <form [formGroup]="form" class="form">
+    <select formControlName="source">
+      <option [value]="null">Select source</option>
+      <option *ngFor="let source of homeService.sources$ | async" [value]="source.id">
+        {{ source.name }}</option>
+    </select>
 
-  <input type="text" formControlName="keywords" />
+    <input placeholder="Keywords" class="ml-10" type="text" formControlName="keywords" />
 
-  <input type="checkbox" formControlName="onlyByMe" />
-</form>
+    <div class="checkbox ml-10">
+      <input id="onlyByMe" type="checkbox" formControlName="onlyByMe" />
+      <label for="onlyByMe">Only Mine</label>
+    </div>
+  </form>
 
-<button type="button" (click)="addArticleClick()">Add Article</button>
+  <a [routerLink]="'article/create'">Add Article</a>
+</div>

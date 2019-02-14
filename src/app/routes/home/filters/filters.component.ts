@@ -1,10 +1,12 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { HomeService } from '../home.service'
 import { FormControl, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
+  styleUrls: ['./filters.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FiltersComponent {
   form: FormGroup
@@ -17,9 +19,5 @@ export class FiltersComponent {
       keywords: new FormControl(),
       onlyByMe: new FormControl(),
     })
-  }
-
-  addArticleClick() {
-    console.warn('add article')
   }
 }
