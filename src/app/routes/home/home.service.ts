@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core'
 import { Source } from 'src/app/models/source'
-import { Subject, BehaviorSubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { Article } from 'src/app/models/article'
 import { Filter } from 'src/app/models/filter'
 import { NewsAPIService } from './newsapi.service'
 import { AppService } from 'src/app/core/app.service'
+import { LocalNewsService } from './local-news.service'
 
 @Injectable()
 export class HomeService {
@@ -16,6 +17,7 @@ export class HomeService {
   constructor(
     private newsApiService: NewsAPIService,
     private appService: AppService,
+    private localNewsService: LocalNewsService,
   ) {
     newsApiService.getSources()
       .subscribe(sources => {
@@ -37,12 +39,21 @@ export class HomeService {
   }
 
   loadFromParams(filter: Filter) {
-    this.newsApiService.getArticles(filter)
-      .subscribe(articles => {
-        this.articles$.next(articles.articles)
-        if (filter.source) {
-          this.appService.setPageTitle(filter.source.name)
-        }
-      })
+    if (!filter.local) {
+
+      this.newsApiService.getArticles(filter)
+        .subscribe(articles => {
+          this.articles$.next(articles.articles)
+          if (filter.source) {
+            this.appService.setPageTitle(filter.source.name)
+          }
+        })
+    } else {
+      this.localNewsService.getArticles()
+        .subscribe(articles => {
+          this.articles$.next(articles)
+          this.appService.setPageTitle('Local news')
+        })
+    }
   }
 }

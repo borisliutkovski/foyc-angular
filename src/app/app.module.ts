@@ -4,25 +4,27 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
-import { FooterComponent } from './footer.component'
 import { HomeService } from './routes/home/home.service'
 import { NewsAPIService } from './routes/home/newsapi.service'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'
+import { LocalNewsService } from './routes/home/local-news.service'
+import { AuthModule } from './routes/auth/auth.module'
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    AuthModule,
   ],
   providers: [
     HomeService,
     NewsAPIService,
+    LocalNewsService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,23 @@
+<form [formGroup]="form"
+      (ngSubmit)="submit.emit(form.value)">
+
+  <div class="form-gruop">
+    <label for="username">Username</label>
+    <input type="text"
+           id="username"
+           formControlName="username" />
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password"
+           id="password"
+           formControlName="password" />
+  </div>
+
+  <div class="buttons">
+    <button type="submit">{{ submitButtonText }}</button>
+    <button type="button"
+            (click)="cancel.emit()">Cancel</button>
+  </div>
+</form>

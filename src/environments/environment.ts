@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   newsApiKey: '2336d5be883244548b621cba911f0f80',
+  apiUrl: 'http://localhost:3000',
 }
 
 /*

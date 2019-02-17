@@ -1,11 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { NewsAPIService } from '../../home/newsapi.service'
 import { Article } from 'src/app/models/article'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Location } from '@angular/common'
-import { HomeService } from '../../home/home.service';
-import { AppService } from 'src/app/core/app.service';
+import { AppService } from 'src/app/core/app.service'
+import { LocalNewsService } from '../../home/local-news.service'
 
 enum ImageType {
   url,
@@ -27,9 +26,9 @@ export class UpsertArticleComponent {
 
   constructor(
     route: ActivatedRoute,
-    private homeService: HomeService,
     private location: Location,
     appService: AppService,
+    private localNewsService: LocalNewsService,
   ) {
     route.paramMap.subscribe(paramMap => {
       this.editedId = paramMap.get('id') || undefined
@@ -44,14 +43,12 @@ export class UpsertArticleComponent {
     })
   }
 
-  private loadArticle(loadedUrl: string) {
-    this.homeService.articles$.subscribe(articles => {
-      const article = articles.find(({ url }) => url === loadedUrl)
-      this.createForm(article)
-    })
+  private loadArticle(id: string) {
+    this.localNewsService.getArticle(id)
+      .subscribe(this.createForm)
   }
 
-  private createForm(article?: Article) {
+  private createForm = (article?: Article) => {
     this.form = new FormGroup({
       author: new FormControl(article ? article.author : ''),
       title: new FormControl(article ? article.title : ''),
@@ -70,6 +67,6 @@ export class UpsertArticleComponent {
   }
 
   onSubmit() {
-    alert(this.form.value)
+    this.localNewsService.createArticle(this.form.value)
   }
 }

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { of } from 'rxjs'
 import { Source } from 'src/app/models/source'
 import { environment } from 'src/environments/environment'
 import { Article } from 'src/app/models/article'
-import { Filter } from 'src/app/models/filter';
+import { Filter } from 'src/app/models/filter'
 
 interface NewsApiResponse {
   status: string,
@@ -21,7 +20,9 @@ interface ArticlesResponse extends NewsApiResponse {
 
 @Injectable()
 export class NewsAPIService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   getSources() {
     return this.http.get<SourcesResponse>(`https://newsapi.org/v2/sources?apiKey=${environment.newsApiKey}`)
@@ -42,27 +43,13 @@ export class NewsAPIService {
       `https://newsapi.org/v2/everything` +
       `?apiKey=${environment.newsApiKey}` +
       (filter.keywords ? `&q=${filter.keywords.split(' ').join(',')}` : '') +
-      (filter.source ? `&sources=${filter.source}` : '')
+      (filter.source ? `&sources=${filter.source}` : ''),
     )
   }
 
   getArticleById(id: string) {
-    // supposed to be my api
-    const article: Article = {
-      author: 'author',
-      content: 'content',
-      description: 'description',
-      id: '234985yiuao4',
-      publishedAt: new Date(),
-      source: {
-        id: 'asdf',
-        name: 'asdfasd',
-      },
-      title: 'Title',
-      url: 'asdfsfad',
-      urlToImage: 'asdfasdf',
-    }
-
-    return of(article)
+    return this.http.get<Article>(
+      `${environment.apiUrl}/news/${id}`,
+    )
   }
 }

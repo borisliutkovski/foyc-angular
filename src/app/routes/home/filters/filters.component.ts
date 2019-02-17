@@ -3,7 +3,7 @@ import { HomeService } from '../home.service'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
-import { Filter } from 'src/app/models/filter';
+import { Filter } from 'src/app/models/filter'
 
 @Component({
   selector: 'app-filters',
@@ -23,6 +23,7 @@ export class FiltersComponent implements OnDestroy {
       source: new FormControl(null),
       keywords: new FormControl(),
       onlyByMe: new FormControl(false),
+      local: new FormControl(false),
     })
 
     this.form.valueChanges.pipe(takeUntil(this.onDestroy))
@@ -31,6 +32,7 @@ export class FiltersComponent implements OnDestroy {
           keywords: form.keywords,
           onlyByMe: form.onlyByMe,
           source: form.source,
+          local: form.local,
         }
 
         this.homeService.loadFromParams(filter)
