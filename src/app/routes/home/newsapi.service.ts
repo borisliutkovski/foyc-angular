@@ -4,6 +4,7 @@ import { of } from 'rxjs'
 import { Source } from 'src/app/models/source'
 import { environment } from 'src/environments/environment'
 import { Article } from 'src/app/models/article'
+import { Filter } from 'src/app/models/filter';
 
 interface NewsApiResponse {
   status: string,
@@ -33,6 +34,15 @@ export class NewsAPIService {
       `&pageSize=10` +
       `&page=${page}` +
       `&apiKey=${environment.newsApiKey}`,
+    )
+  }
+
+  getArticles(filter: Filter) {
+    return this.http.get<ArticlesResponse>(
+      `https://newsapi.org/v2/everything` +
+      `?apiKey=${environment.newsApiKey}` +
+      (filter.keywords ? `&q=${filter.keywords.split(' ').join(',')}` : '') +
+      (filter.source ? `&sources=${filter.source}` : '')
     )
   }
 

@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 body {
+  font-family: 'Lato', sans-serif;
   height: 100vh;
 }
 
@@ -46,9 +49,16 @@ select {
   margin-bottom: 10px;
 }
 
+.mt-10 {
+  margin-top: 10px;
+}
+
+.d-flex {
+  display: flex;
+}
+
 button {
   border: 1px solid gray;
-  background-color: lightcyan;
   border-radius: 5px;
   padding: 7px;
   display: flex;

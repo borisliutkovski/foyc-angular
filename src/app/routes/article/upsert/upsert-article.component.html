@@ -1,40 +1,37 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <legend>
-    <h2>{{ isEdit ? Edit : Create }}</h2>
-  </legend>
-  <div>
+  <div class="form-group">
     <label for="title">Title</label>
     <input id="title" formControlName="title" />
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="description">Description</label>
     <input id="description" formControlName="description" />
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="content">Content</label>
     <input id="content" formControlName="content" />
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="author">Author</label>
     <input id="author" formControlName="author" />
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="url">Url</label>
     <input id="url" formControlName="url" />
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Image</label>
-    <div>
+    <div class="d-flex">
       <div>
         <label for="imageUrl">URL</label>
         <input type="radio" id="imageUrl" formControlName="imageType" [value]="ImageType.url" />
       </div>
-      <div>
+      <div class="ml-10">
         <label for="imageFile">File</label>
         <input type="radio" id="imageFile" formControlName="imageType" [value]="ImageType.file" />
       </div>
@@ -44,6 +41,8 @@
     <input *ngIf="form.controls.imageType.value === ImageType.file" type="file" formControlName="imageFile" />
   </div>
 
-  <button type="submit">Save</button>
-  <button type="button" (click)="onBack()">Cancel</button>
+  <div class="buttons">
+    <button type="submit">Save</button>
+    <button type="button" (click)="onBack()">Cancel</button>
+  </div>
 </form>

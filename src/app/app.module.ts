@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
 import { FooterComponent } from './footer.component'
+import { HomeService } from './routes/home/home.service'
+import { NewsAPIService } from './routes/home/newsapi.service'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,8 +18,12 @@ import { FooterComponent } from './footer.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    HomeService,
+    NewsAPIService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

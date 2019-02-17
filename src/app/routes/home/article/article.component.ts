@@ -20,7 +20,7 @@ export class ArticleComponent {
   }
 
   editClick() {
-    this.router.navigate(['article', 'edit', this.article.id])
+    this.router.navigate(['article', 'edit', encodeURI(this.article.url)])
   }
 
   readMoreClick() {

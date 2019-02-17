@@ -1,14 +1,14 @@
-<div *ngIf="article">
+<div *ngIf="article" class="article">
   <img *ngIf="article.urlToImage" [src]="article.urlToImage" />
 
   <h1>{{ article.title }}</h1>
 
   <p>{{ article.content }}</p>
 
-  <p>{{ article.publishedAt }}</p>
+  <p class="mt-10">{{ article.publishedAt | date: 'dd/MM/yyyy hh:mm' }}</p>
   <p>{{ article.author }}</p>
 
-  <div>
+  <div class="buttons">
     <button type="button" (click)="editClick()">Edit</button>
     <button type="button" (click)="deleteClick()">Delete</button>
   </div>

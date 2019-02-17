@@ -2,8 +2,9 @@
   <form [formGroup]="form" class="form">
     <select formControlName="source">
       <option [value]="null">Select source</option>
-      <option *ngFor="let source of homeService.sources$ | async" [value]="source.id">
-        {{ source.name }}</option>
+      <option *ngFor="let source of homeService.sources$ | async" [ngValue]="source">
+        {{ source.name }}
+      </option>
     </select>
 
     <input placeholder="Keywords" class="ml-10" type="text" formControlName="keywords" />

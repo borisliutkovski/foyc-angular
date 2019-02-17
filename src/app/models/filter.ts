@@ -2,6 +2,6 @@ import { Source } from './source'
 
 export interface Filter {
   source?: Source,
-  text?: string,
+  keywords?: string,
   onlyByMe?: boolean,
 }

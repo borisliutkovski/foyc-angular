@@ -1,6 +1,7 @@
 <header>
   <div class="header-wrapper">
     <a [routerLink]="'/'">FOYC</a>
+      <h2>{{ appService.pageTitle$ | async }}</h2>
     <div>
       <p>{{ (userService.currentUser$ | async)?.userName }}</p>
       <button *ngIf="userService.currentUser$ | async" type="button" (click)="userService.logout()">Log out</button>
@@ -9,6 +10,5 @@
   </div>
 
   <div>
-    <h2>{{ appService.pageTitle | async }}</h2>
   </div>
 </header>
