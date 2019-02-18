@@ -5,7 +5,7 @@ import { ViewArticleComponent } from './view-article/view-article.component'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: ':url', component: ViewArticleComponent },
+  { path: ':id', component: ViewArticleComponent },
 ]
 
 @NgModule({

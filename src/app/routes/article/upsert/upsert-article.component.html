@@ -1,4 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input formControlName="title" hidden /> <!-- weird bug - the form refuses to bind the first input ??!?? -->
+
   <div class="form-group">
     <label for="title">Title</label>
     <input id="title" formControlName="title" />

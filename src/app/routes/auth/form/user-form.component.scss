@@ -1,0 +1,21 @@
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+label {
+  font-weight: 700;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.buttons {
+  button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}

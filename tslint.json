@@ -71,6 +71,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "semicolon": [true, "never"],
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "variable-name": false
   }
 }

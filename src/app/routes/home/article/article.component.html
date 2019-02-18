@@ -10,8 +10,8 @@
   <div class="side-info">
     <span>{{ article.publishedAt | date: 'dd/MM/yyyy hh:mm' }}</span>
     <div class="buttons ml-10">
-      <button type="button" class="mb-10" [disabled]="!(isLoggedIn | async)" (click)="editClick()">Edit</button>
-      <button type="button" [disabled]="!(isLoggedIn | async)" (click)="deleteClick()">Delete</button>
+      <button type="button" class="mb-10" [disabled]="!(authService.isLoggedIn$ | async)" (click)="editClick()">Edit</button>
+      <button type="button" [disabled]="!(authService.isLoggedIn$ | async)" (click)="deleteClick()">Delete</button>
     </div>
   </div>
 </div>

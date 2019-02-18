@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Article } from 'src/app/models/article'
 import { LocalNewsService } from '../local-news.service'
+import { mergeMap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-view-article',
@@ -16,20 +17,23 @@ export class ViewArticleComponent {
     route: ActivatedRoute,
     localNewsService: LocalNewsService,
     private router: Router,
+    cdr: ChangeDetectorRef,
   ) {
-    route.paramMap.subscribe(paramMap => {
+    route.paramMap.pipe(mergeMap(paramMap => {
       const id = paramMap.get('id')
       if (!id) {
         throw new Error()
       }
 
-      localNewsService.getArticle(id)
-        .subscribe(article => this.article = article)
+      return localNewsService.getArticle(id)
+    })).subscribe(article => {
+      this.article = article
+      cdr.markForCheck()
     })
   }
 
   editClick() {
-    this.router.navigate(['article', 'edit', this.article.id])
+    this.router.navigate(['article', 'edit', this.article._id])
   }
 
   deleteClick() {

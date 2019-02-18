@@ -7,5 +7,5 @@
     [article]="article"
   ></app-article>
 
-  <button class="loadmore" type="button" (click)="homeService.loadMoreArticles()">Load more</button>
+  <button *ngIf="!(homeService.currentFilter$ | async)?.local" class="loadmore" type="button" (click)="homeService.loadMoreArticles()">Load more</button>
 </div>

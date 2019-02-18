@@ -2,7 +2,6 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { Article } from 'src/app/models/article'
 import { Router } from '@angular/router'
 import { AuthService } from '../../auth/auth.service'
-import { map } from 'rxjs/operators'
 import { LocalNewsService } from '../local-news.service'
 
 @Component({
@@ -14,29 +13,27 @@ import { LocalNewsService } from '../local-news.service'
 export class ArticleComponent {
   @Input() article!: Article
 
-  isLoggedIn = this.authService.currentUsername$.pipe(map(username => !!username))
-
   constructor(
     private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
     private localNewsService: LocalNewsService,
   ) { }
 
   deleteClick() {
-    if (!this.article.id) {
+    if (!this.article._id) {
       return
     }
 
-    this.localNewsService.deleteArticle(this.article.id)
+    this.localNewsService.deleteArticle(this.article._id)
   }
 
   editClick() {
-    this.router.navigate(['article', 'edit', this.article.id])
+    this.router.navigate(['article', 'edit', this.article._id])
   }
 
   readMoreClick() {
-    if (this.article.id) {
-      this.router.navigate(['/', this.article.id])
+    if (this.article._id) {
+      this.router.navigate(['/', this.article._id])
     } else {
       window.open(this.article.url)
     }

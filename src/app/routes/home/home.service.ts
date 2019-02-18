@@ -9,9 +9,12 @@ import { LocalNewsService } from './local-news.service'
 
 @Injectable()
 export class HomeService {
-  sources$ = new BehaviorSubject<Source[]>([])
-  articles$ = new BehaviorSubject<Article[]>([])
-  currentFilter$ = new BehaviorSubject<Filter | undefined>(undefined)
+  private _sources$ = new BehaviorSubject<Source[]>([])
+  sources$ = this._sources$.asObservable()
+  private _articles$ = new BehaviorSubject<Article[]>([])
+  articles$ = this._articles$.asObservable()
+  private _currentFilter$ = new BehaviorSubject<Filter | undefined>(undefined)
+  currentFilter$ = this._currentFilter$.asObservable()
   private page = 1
 
   constructor(
@@ -21,12 +24,12 @@ export class HomeService {
   ) {
     newsApiService.getSources()
       .subscribe(sources => {
-        this.sources$.next(sources.sources)
+        this._sources$.next(sources.sources)
       })
 
     newsApiService.getTopArticles(this.page)
       .subscribe(articles => {
-        this.articles$.next(articles.articles)
+        this._articles$.next(articles.articles)
       })
   }
 
@@ -34,16 +37,20 @@ export class HomeService {
     this.page++
     this.newsApiService.getTopArticles(this.page)
       .subscribe(articles => {
-        this.articles$.next(this.articles$.value.concat(articles.articles))
+        this._articles$.next(this._articles$.value.concat(articles.articles))
       })
   }
 
   loadFromParams(filter: Filter) {
+    this._currentFilter$.next(filter)
     if (!filter.local) {
+      const getArticlesObservable = (filter.keywords || filter.source)
+        ? this.newsApiService.getArticles(filter)
+        : this.newsApiService.getTopArticles()
 
-      this.newsApiService.getArticles(filter)
+      getArticlesObservable
         .subscribe(articles => {
-          this.articles$.next(articles.articles)
+          this._articles$.next(articles.articles)
           if (filter.source) {
             this.appService.setPageTitle(filter.source.name)
           }
@@ -51,7 +58,7 @@ export class HomeService {
     } else {
       this.localNewsService.getArticles()
         .subscribe(articles => {
-          this.articles$.next(articles)
+          this._articles$.next(articles)
           this.appService.setPageTitle('Local news')
         })
     }

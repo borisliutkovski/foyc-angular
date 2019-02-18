@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms'
 import { Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { Filter } from 'src/app/models/filter'
+import { AuthService } from '../../auth/auth.service'
 
 @Component({
   selector: 'app-filters',
@@ -18,6 +19,7 @@ export class FiltersComponent implements OnDestroy {
 
   constructor(
     public homeService: HomeService,
+    public authService: AuthService,
   ) {
     this.form = new FormGroup({
       source: new FormControl(null),

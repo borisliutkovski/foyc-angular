@@ -1,9 +1,11 @@
 import { Component, ChangeDetectionStrategy, EventEmitter, Output, Input } from '@angular/core'
 import { FormGroup, FormControl } from '@angular/forms'
+import { Credentials } from 'src/app/models/credentials'
 
 @Component({
   selector: 'app-user-form',
-  template: ``,
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormComponent {
@@ -11,7 +13,7 @@ export class UserFormComponent {
 
   @Input() submitButtonText = ''
   @Output() cancel = new EventEmitter()
-  @Output() submit = new EventEmitter<{ username: string, password: string }>()
+  @Output() formSubmit = new EventEmitter<Credentials>()
 
   constructor() {
     this.form = new FormGroup({

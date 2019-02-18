@@ -20,5 +20,5 @@
     </div>
   </form>
 
-  <a [routerLink]="'article/create'">Add Article</a>
+  <a *ngIf="authService.isLoggedIn$ | async" [routerLink]="'article/create'">Add Article</a>
 </div>

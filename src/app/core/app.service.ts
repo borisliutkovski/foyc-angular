@@ -3,9 +3,10 @@ import { Subject } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-  pageTitle$ = new Subject<string>()
+  _pageTitle$ = new Subject<string>()
+  pageTitle$ = this._pageTitle$.asObservable()
 
   setPageTitle(value: string) {
-    this.pageTitle$.next(value)
+    this._pageTitle$.next(value)
   }
 }

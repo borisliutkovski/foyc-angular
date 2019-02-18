@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core'
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { Article } from 'src/app/models/article'
 import { FormGroup, FormControl } from '@angular/forms'
@@ -21,6 +21,7 @@ export class UpsertArticleComponent {
   isEdit = false
   editedId?: string
   form!: FormGroup
+  private article?: Article
 
   ImageType = ImageType
 
@@ -29,6 +30,7 @@ export class UpsertArticleComponent {
     private location: Location,
     appService: AppService,
     private localNewsService: LocalNewsService,
+    private cdr: ChangeDetectorRef,
   ) {
     route.paramMap.subscribe(paramMap => {
       this.editedId = paramMap.get('id') || undefined
@@ -45,7 +47,11 @@ export class UpsertArticleComponent {
 
   private loadArticle(id: string) {
     this.localNewsService.getArticle(id)
-      .subscribe(this.createForm)
+      .subscribe(article => {
+        this.createForm(article)
+        this.article = article
+        this.cdr.markForCheck()
+      })
   }
 
   private createForm = (article?: Article) => {
@@ -67,6 +73,14 @@ export class UpsertArticleComponent {
   }
 
   onSubmit() {
-    this.localNewsService.createArticle(this.form.value)
+    if (this.isEdit && this.article) {
+      const article = {
+        ...this.form.value,
+        _id: this.article._id,
+      }
+
+      this.localNewsService.updateArticle(article).subscribe()
+    }
+    this.localNewsService.createArticle(this.form.value).subscribe()
   }
 }

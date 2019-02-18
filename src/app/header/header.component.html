@@ -3,9 +3,10 @@
     <a [routerLink]="'/'">FOYC</a>
       <h2>{{ appService.pageTitle$ | async }}</h2>
     <div>
-      <p>{{ (userService.currentUser$ | async)?.userName }}</p>
-      <button *ngIf="userService.currentUser$ | async" type="button" (click)="userService.logout()">Log out</button>
-      <a *ngIf="!(userService.currentUser$ | async)" (click)="userService.login()">Sign in</a>
+      <p>{{ (authService.currentUser$ | async)?.userName }}</p>
+      <button *ngIf="authService.currentUser$ | async" type="button" (click)="logout()">Log out</button>
+      <a *ngIf="!(authService.currentUser$ | async)" (click)="login()">Log in</a>
+      <a class="ml-10" *ngIf="!(authService.currentUser$ | async)" (click)="signup()">Sign up</a>
     </div>
   </div>
 
