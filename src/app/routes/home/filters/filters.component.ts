@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core'
 import { HomeService } from '../home.service'
 import { FormControl, FormGroup } from '@angular/forms'
 import { Subject } from 'rxjs'
-import { takeUntil } from 'rxjs/operators'
+import { takeUntil, debounceTime } from 'rxjs/operators'
 import { Filter } from 'src/app/models/filter'
 import { AuthService } from '../../auth/auth.service'
 
@@ -28,7 +28,10 @@ export class FiltersComponent implements OnDestroy {
       local: new FormControl(false),
     })
 
-    this.form.valueChanges.pipe(takeUntil(this.onDestroy))
+    this.form.valueChanges.pipe(
+      takeUntil(this.onDestroy),
+      debounceTime(200),
+    )
       .subscribe(form => {
         const filter: Filter = {
           keywords: form.keywords,
