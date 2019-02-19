@@ -3,7 +3,7 @@ import { Subject } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-  _pageTitle$ = new Subject<string>()
+  private _pageTitle$ = new Subject<string>()
   pageTitle$ = this._pageTitle$.asObservable()
 
   setPageTitle(value: string) {
