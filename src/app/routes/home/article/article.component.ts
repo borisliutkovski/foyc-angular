@@ -36,7 +36,7 @@ export class ArticleComponent {
 
   readMoreClick() {
     if (this.article._id) {
-      this.router.navigate(['/', this.article._id])
+      this.router.navigate(['/', 'view', this.article._id])
     } else {
       window.open(this.article.url)
     }

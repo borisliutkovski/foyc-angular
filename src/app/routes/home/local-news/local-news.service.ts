@@ -20,6 +20,12 @@ export class LocalNewsService extends ILocalNewsService {
     )
   }
 
+  getTest() {
+    return this.http.get<Article[]>(
+      `${environment.apiUrl}/news/rxjs`,
+    )
+  }
+
   getArticle(id: string) {
     return this.http.get<Article | undefined>(
       `${environment.apiUrl}/news/${id}`,
