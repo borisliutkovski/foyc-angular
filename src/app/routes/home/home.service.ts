@@ -5,7 +5,7 @@ import { Article } from 'src/app/models/article'
 import { Filter } from 'src/app/models/filter'
 import { NewsAPIService } from './newsapi.service'
 import { AppService } from 'src/app/core/app.service'
-import { LocalNewsService } from './local-news.service'
+import { ILocalNewsService } from './local-news/local-news.interface'
 
 @Injectable()
 export class HomeService {
@@ -20,14 +20,16 @@ export class HomeService {
   constructor(
     private newsApiService: NewsAPIService,
     private appService: AppService,
-    private localNewsService: LocalNewsService,
-  ) {
-    newsApiService.getSources()
+    private localNewsService: ILocalNewsService,
+  ) { }
+
+  private init() {
+    this.newsApiService.getSources()
       .subscribe(sources => {
         this._sources$.next(sources.sources)
       })
 
-    newsApiService.getTopArticles(this.page)
+    this.newsApiService.getTopArticles(this.page)
       .subscribe(articles => {
         this._articles$.next(articles.articles)
       })
@@ -61,6 +63,14 @@ export class HomeService {
           this._articles$.next(articles)
           this.appService.setPageTitle('Local news')
         })
+    }
+  }
+
+  refreshArticles() {
+    if (!this._currentFilter$.value) {
+      this.init()
+    } else {
+      this.loadFromParams(this._currentFilter$.value)
     }
   }
 }

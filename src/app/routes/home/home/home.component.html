@@ -5,6 +5,7 @@
     class="article"
     *ngFor="let article of homeService.articles$ | async"
     [article]="article"
+    (deleted)="homeService.refreshArticles()"
   ></app-article>
 
   <button *ngIf="!(homeService.currentFilter$ | async)?.local" class="loadmore" type="button" (click)="homeService.loadMoreArticles()">Load more</button>

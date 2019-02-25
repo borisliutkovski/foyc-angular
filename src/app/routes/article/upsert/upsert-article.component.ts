@@ -4,7 +4,7 @@ import { Article } from 'src/app/models/article'
 import { FormGroup, FormControl } from '@angular/forms'
 import { Location } from '@angular/common'
 import { AppService } from 'src/app/core/app.service'
-import { LocalNewsService } from '../../home/local-news.service'
+import { ILocalNewsService } from '../../home/local-news/local-news.interface'
 
 enum ImageType {
   url,
@@ -29,7 +29,7 @@ export class UpsertArticleComponent {
     route: ActivatedRoute,
     private location: Location,
     appService: AppService,
-    private localNewsService: LocalNewsService,
+    private localNewsService: ILocalNewsService,
     private cdr: ChangeDetectorRef,
   ) {
     route.paramMap.subscribe(paramMap => {

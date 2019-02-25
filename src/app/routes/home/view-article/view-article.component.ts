@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Article } from 'src/app/models/article'
-import { LocalNewsService } from '../local-news.service'
+import { ILocalNewsService } from '../local-news/local-news.interface'
 import { mergeMap } from 'rxjs/operators'
 
 @Component({
@@ -15,7 +15,7 @@ export class ViewArticleComponent {
 
   constructor(
     route: ActivatedRoute,
-    localNewsService: LocalNewsService,
+    localNewsService: ILocalNewsService,
     private router: Router,
     cdr: ChangeDetectorRef,
   ) {
@@ -27,6 +27,10 @@ export class ViewArticleComponent {
 
       return localNewsService.getArticle(id)
     })).subscribe(article => {
+      if (!article) {
+        return
+      }
+
       this.article = article
       cdr.markForCheck()
     })
