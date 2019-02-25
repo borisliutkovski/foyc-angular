@@ -21,7 +21,9 @@ export class HomeService {
     private newsApiService: NewsAPIService,
     private appService: AppService,
     private localNewsService: ILocalNewsService,
-  ) { }
+  ) {
+    this.init()
+  }
 
   private init() {
     this.newsApiService.getSources()
