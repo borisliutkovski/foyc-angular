@@ -16,11 +16,9 @@ export class HeaderComponent {
     private router: Router,
   ) { }
 
-  logout() {
-    this.authService.logout()
-      .subscribe(() => {
-        this.router.navigate(['/'])
-      })
+  async logout() {
+    await this.authService.logout().subscribe()
+    this.router.navigate(['/'])
   }
 
   login() {
