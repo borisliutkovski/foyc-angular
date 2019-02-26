@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core'
-import { Location } from '@angular/common'
 import { AuthService } from '../auth.service'
 import { Router } from '@angular/router'
 import { Credentials } from 'src/app/models/credentials'
@@ -11,13 +10,12 @@ import { Credentials } from 'src/app/models/credentials'
 })
 export class LoginComponent {
   constructor(
-    private location: Location,
     private authService: AuthService,
     private router: Router,
   ) { }
 
   cancel() {
-    this.location.back()
+    this.router.navigate(['/'])
   }
 
   login(credentials: Credentials) {

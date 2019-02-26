@@ -15,7 +15,7 @@ export class ViewArticleComponent {
 
   constructor(
     route: ActivatedRoute,
-    localNewsService: ILocalNewsService,
+    private localNewsService: ILocalNewsService,
     private router: Router,
     cdr: ChangeDetectorRef,
   ) {
@@ -41,6 +41,11 @@ export class ViewArticleComponent {
   }
 
   deleteClick() {
-    console.warn('delete')
+    if (!this.article._id) {
+      return
+    }
+
+    this.localNewsService.deleteArticle(this.article._id)
+      .subscribe(() => this.router.navigate(['/']))
   }
 }

@@ -1,10 +1,10 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { Article } from 'src/app/models/article'
-import { FormGroup, FormControl } from '@angular/forms'
-import { Location } from '@angular/common'
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AppService } from 'src/app/core/app.service'
 import { ILocalNewsService } from '../../home/local-news/local-news.interface'
+import { map } from 'rxjs/internal/operators/map'
 
 enum ImageType {
   url,
@@ -20,17 +20,17 @@ enum ImageType {
 export class UpsertArticleComponent {
   isEdit = false
   editedId?: string
-  form!: FormGroup
+  form = new FormGroup({})
   private article?: Article
 
   ImageType = ImageType
 
   constructor(
     route: ActivatedRoute,
-    private location: Location,
     appService: AppService,
     private localNewsService: ILocalNewsService,
     private cdr: ChangeDetectorRef,
+    private router: Router,
   ) {
     route.paramMap.subscribe(paramMap => {
       this.editedId = paramMap.get('id') || undefined
@@ -57,30 +57,36 @@ export class UpsertArticleComponent {
   private createForm = (article?: Article) => {
     this.form = new FormGroup({
       author: new FormControl(article ? article.author : ''),
-      title: new FormControl(article ? article.title : ''),
-      description: new FormControl(article ? article.description : ''),
+      title: new FormControl(article ? article.title : '', Validators.required),
+      description: new FormControl(article ? article.description : '', Validators.required),
       url: new FormControl(article ? article.url : ''),
       urlToImage: new FormControl(article ? article.urlToImage : ''),
       imageFile: new FormControl(),
       imageType: new FormControl(),
       publishedAt: new FormControl(article ? article.publishedAt : ''),
-      content: new FormControl(article ? article.content : ''),
+      content: new FormControl(article ? article.content : '', Validators.required),
     })
   }
 
   onBack() {
-    this.location.back()
+    this.router.navigate(['/'])
   }
 
   onSubmit() {
+    this.createOrUpdateArticle()
+      .subscribe(() => this.router.navigate(['/']))
+  }
+
+  private createOrUpdateArticle() {
     if (this.isEdit && this.article) {
       const article = {
         ...this.form.value,
         _id: this.article._id,
       }
 
-      this.localNewsService.updateArticle(article).subscribe()
+      return this.localNewsService.updateArticle(article)
     }
-    this.localNewsService.createArticle(this.form.value).subscribe()
+
+    return this.localNewsService.createArticle(this.form.value).pipe(map(() => {}))
   }
 }

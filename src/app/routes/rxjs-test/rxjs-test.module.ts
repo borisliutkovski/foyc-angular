@@ -16,6 +16,6 @@ import { LocalNewsService } from '../home/local-news/local-news.service'
   ],
   providers: [
     LocalNewsService,
-  ]
+  ],
 })
 export class RxjsTestModule { }
