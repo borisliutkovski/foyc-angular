@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { AppService } from 'src/app/core/app.service'
 import { ILocalNewsService } from '../../home/local-news/local-news.interface'
 import { map } from 'rxjs/internal/operators/map'
+import { DestroyableComponent } from 'src/app/core/util/destroyable.component'
+import { takeUntil } from 'rxjs/operators'
 
 enum ImageType {
   url,
@@ -17,7 +19,7 @@ enum ImageType {
   styleUrls: ['./upsert-article.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UpsertArticleComponent {
+export class UpsertArticleComponent extends DestroyableComponent {
   isEdit = false
   editedId?: string
   form = new FormGroup({})
@@ -32,17 +34,21 @@ export class UpsertArticleComponent {
     private cdr: ChangeDetectorRef,
     private router: Router,
   ) {
-    route.paramMap.subscribe(paramMap => {
-      this.editedId = paramMap.get('id') || undefined
-      this.isEdit = !!this.editedId
-      appService.setPageTitle(this.isEdit ? 'Edit' : 'Create')
+    super()
 
-      if (this.isEdit && this.editedId) {
-        this.loadArticle(this.editedId)
-      } else {
-        this.createForm()
-      }
-    })
+    route.paramMap
+      .pipe(takeUntil(this.onDestory))
+      .subscribe(paramMap => {
+        this.editedId = paramMap.get('id') || undefined
+        this.isEdit = !!this.editedId
+        appService.setPageTitle(this.isEdit ? 'Edit' : 'Create')
+
+        if (this.isEdit && this.editedId) {
+          this.loadArticle(this.editedId)
+        } else {
+          this.createForm()
+        }
+      })
   }
 
   private loadArticle(id: string) {
@@ -87,6 +93,6 @@ export class UpsertArticleComponent {
       return this.localNewsService.updateArticle(article)
     }
 
-    return this.localNewsService.createArticle(this.form.value).pipe(map(() => {}))
+    return this.localNewsService.createArticle(this.form.value).pipe(map(() => { }))
   }
 }

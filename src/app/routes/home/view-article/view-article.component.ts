@@ -2,7 +2,8 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router'
 import { Article } from 'src/app/models/article'
 import { ILocalNewsService } from '../local-news/local-news.interface'
-import { mergeMap } from 'rxjs/operators'
+import { mergeMap, takeUntil } from 'rxjs/operators'
+import { DestroyableComponent } from 'src/app/core/util/destroyable.component'
 
 @Component({
   selector: 'app-view-article',
@@ -10,7 +11,7 @@ import { mergeMap } from 'rxjs/operators'
   styleUrls: ['./view-article.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ViewArticleComponent {
+export class ViewArticleComponent extends DestroyableComponent {
   article!: Article
 
   constructor(
@@ -19,21 +20,24 @@ export class ViewArticleComponent {
     private router: Router,
     cdr: ChangeDetectorRef,
   ) {
-    route.paramMap.pipe(mergeMap(paramMap => {
-      const id = paramMap.get('id')
-      if (!id) {
-        throw new Error()
-      }
+    super()
+    route.paramMap.pipe(
+      takeUntil(this.onDestory),
+      mergeMap(paramMap => {
+        const id = paramMap.get('id')
+        if (!id) {
+          throw new Error()
+        }
 
-      return localNewsService.getArticle(id)
-    })).subscribe(article => {
-      if (!article) {
-        return
-      }
+        return localNewsService.getArticle(id)
+      })).subscribe(article => {
+        if (!article) {
+          return
+        }
 
-      this.article = article
-      cdr.markForCheck()
-    })
+        this.article = article
+        cdr.markForCheck()
+      })
   }
 
   editClick() {
