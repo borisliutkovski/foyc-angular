@@ -22,7 +22,7 @@ export class ViewArticleComponent extends DestroyableComponent {
   ) {
     super()
     route.paramMap.pipe(
-      takeUntil(this.onDestory),
+      takeUntil(this.onDestroy),
       mergeMap(paramMap => {
         const id = paramMap.get('id')
         if (!id) {

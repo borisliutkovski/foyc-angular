@@ -44,7 +44,7 @@
   </div>
 
   <div class="buttons">
-    <button type="submit">Save</button>
-    <button type="button" [disabled]="!form.valid" (click)="onBack()">Cancel</button>
+    <button type="submit" [disabled]="!form.valid">Save</button>
+    <button type="button" (click)="onBack()">Cancel</button>
   </div>
 </form>

@@ -37,7 +37,7 @@ export class UpsertArticleComponent extends DestroyableComponent {
     super()
 
     route.paramMap
-      .pipe(takeUntil(this.onDestory))
+      .pipe(takeUntil(this.onDestroy))
       .subscribe(paramMap => {
         this.editedId = paramMap.get('id') || undefined
         this.isEdit = !!this.editedId

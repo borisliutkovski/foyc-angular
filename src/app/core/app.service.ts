@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
-import { Subject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-  private _pageTitle$ = new Subject<string>()
+  private _pageTitle$ = new BehaviorSubject<string>('FOYC')
   pageTitle$ = this._pageTitle$.asObservable()
 
   setPageTitle(value: string) {
